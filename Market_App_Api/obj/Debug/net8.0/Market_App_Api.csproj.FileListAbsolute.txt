@@ -143,3 +143,4 @@ C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\obj\D
 C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\obj\Debug\net8.0\Market_App_Api.pdb
 C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\obj\Debug\net8.0\Market_App_Api.genruntimeconfig.cache
 C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\obj\Debug\net8.0\ref\Market_App_Api.dll
+C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\obj\Debug\net8.0\Market_App_Api.sourcelink.json

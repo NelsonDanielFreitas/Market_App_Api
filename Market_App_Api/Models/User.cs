@@ -41,4 +41,6 @@ public class User
     public string? EmailVerificationCode { get; set; }
     
     public bool EmailVerified { get; set; } = false;
+    
+    public List<GroceryItem> Items { get; set; } = new();
 }
