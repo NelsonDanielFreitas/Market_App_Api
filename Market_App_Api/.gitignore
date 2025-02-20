@@ -68,4 +68,4 @@ docker-compose.yml
 *.nupkg
 .nuget/
 
-
+*.dll
