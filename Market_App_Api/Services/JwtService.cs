@@ -29,8 +29,8 @@ public class JwtService
                  new Claim(ClaimTypes.Role, role)  
              }),
              Expires = DateTime.UtcNow.AddMinutes(int.Parse(_config["Jwt:AccessTokenExpiryMinutes"])),
-             Issuer = _config["JwtSettings:Issuer"],
-             Audience = _config["JwtSettings:Audience"],
+             Issuer = _config["Jwt:Issuer"],
+             Audience = _config["Jwt:Audience"],
              SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
          };
          var token = tokenHandler.CreateToken(tokenDescriptor);

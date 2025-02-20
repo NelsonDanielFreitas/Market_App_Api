@@ -1,10 +1,12 @@
 using MarkerAPI.DTO.Category;
 using MarkerAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarkerAPI.controllers;
 [Route("api/category")]
 [ApiController]
+[Authorize]
 public class CategoryController : ControllerBase
 {
     private readonly CategoryService _categoryService;
