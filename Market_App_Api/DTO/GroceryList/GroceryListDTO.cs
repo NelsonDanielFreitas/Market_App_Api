@@ -7,6 +7,7 @@ public class GroceryListDTO
     public Guid UserId { get; set; }
     public List<GroceryItemDTO> Items { get; set; } = new();
     public decimal TotalPrice { get; set; }
+    public string Status { get; set; }
 }
 
 public class GroceryItemDTO

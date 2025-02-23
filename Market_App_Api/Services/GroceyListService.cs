@@ -26,7 +26,8 @@ public class GroceryListService : IGroceryListService
         var groceryList = new GroceryList
         {
             Name = groceryListDTO.Name,
-            UserId = groceryListDTO.UserId
+            UserId = groceryListDTO.UserId,
+            Status = "Pending"
         };
 
         foreach (var itemDTO in groceryListDTO.Items)
@@ -64,6 +65,7 @@ public class GroceryListService : IGroceryListService
             Name = gl.Name,
             UserId = gl.UserId,
             TotalPrice = gl.TotalPrice,
+            Status = gl.Status,
             Items = gl.Items.Select(item => new GroceryItemDTO
             {
                 ProductId = item.ProductId,
