@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Market_App_API.Migrations
+namespace Market_App_Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate4 : Migration
+    public partial class InitialCreate1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +15,7 @@ namespace Market_App_API.Migrations
                 name: "Categories",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -26,57 +24,48 @@ namespace Market_App_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Expenses",
+                name: "TesteDatabase",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    UserId = table.Column<int>(type: "integer", nullable: false),
-                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
-                    Category = table.Column<string>(type: "text", nullable: false),
-                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Id = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Expenses", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Expenses_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_TesteDatabase", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "GroceryLists",
+                name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Email = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: false)
+                    Password = table.Column<string>(type: "text", nullable: false),
+                    Role = table.Column<string>(type: "text", nullable: true),
+                    refreshToken = table.Column<string>(type: "text", nullable: true),
+                    refreshTokenExpiryTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    FailedLoginAttempts = table.Column<int>(type: "integer", nullable: false),
+                    LockoutEndTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
+                    MaxFailedAttempts = table.Column<int>(type: "integer", nullable: false),
+                    LockoutDuration = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    EmailVerificationCode = table.Column<string>(type: "text", nullable: true),
+                    EmailVerified = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GroceryLists", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_GroceryLists_Users_UserId",
-                        column: x => x.UserId,
-                        principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Barcode = table.Column<string>(type: "text", nullable: false),
                     Price = table.Column<decimal>(type: "numeric", nullable: false),
-                    CategoryId = table.Column<int>(type: "integer", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uuid", nullable: false),
                     Brand = table.Column<string>(type: "text", nullable: true),
                     ExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: true)
                 },
@@ -92,15 +81,56 @@ namespace Market_App_API.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Expenses",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    Category = table.Column<string>(type: "text", nullable: false),
+                    Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Expenses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Expenses_User_Id",
+                        column: x => x.Id,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "GroceryLists",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: false),
+                    TotalPrice = table.Column<decimal>(type: "numeric", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_GroceryLists", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GroceryLists_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "GroceryItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    GroceryListId = table.Column<int>(type: "integer", nullable: false),
-                    ProductId = table.Column<int>(type: "integer", nullable: false),
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    GroceryListId = table.Column<Guid>(type: "uuid", nullable: false),
+                    ProductId = table.Column<Guid>(type: "uuid", nullable: false),
                     Quantity = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<int>(type: "integer", nullable: true)
+                    Price = table.Column<decimal>(type: "numeric", nullable: false),
+                    UserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -118,16 +148,11 @@ namespace Market_App_API.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GroceryItems_Users_UserId",
+                        name: "FK_GroceryItems_User_UserId",
                         column: x => x.UserId,
-                        principalTable: "Users",
+                        principalTable: "User",
                         principalColumn: "Id");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Expenses_UserId",
-                table: "Expenses",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GroceryItems_GroceryListId",
@@ -159,6 +184,12 @@ namespace Market_App_API.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_Email",
+                table: "User",
+                column: "Email",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -171,10 +202,16 @@ namespace Market_App_API.Migrations
                 name: "GroceryItems");
 
             migrationBuilder.DropTable(
+                name: "TesteDatabase");
+
+            migrationBuilder.DropTable(
                 name: "GroceryLists");
 
             migrationBuilder.DropTable(
                 name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Categories");

@@ -8,7 +8,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Market_App_API.Migrations
+namespace Market_App_Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
     partial class AppDbContextModelSnapshot : ModelSnapshot
@@ -24,11 +24,9 @@ namespace Market_App_API.Migrations
 
             modelBuilder.Entity("MarkerAPI.Models.Category", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -41,11 +39,8 @@ namespace Market_App_API.Migrations
 
             modelBuilder.Entity("MarkerAPI.Models.Expense", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
 
                     b.Property<decimal>("Amount")
                         .HasColumnType("numeric");
@@ -57,35 +52,34 @@ namespace Market_App_API.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("timestamp with time zone");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Expenses");
                 });
 
             modelBuilder.Entity("MarkerAPI.Models.GroceryItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("uuid");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    b.Property<Guid>("GroceryListId")
+                        .HasColumnType("uuid");
 
-                    b.Property<int>("GroceryListId")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
 
-                    b.Property<int>("ProductId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -100,18 +94,19 @@ namespace Market_App_API.Migrations
 
             modelBuilder.Entity("MarkerAPI.Models.GroceryList", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("integer");
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
@@ -122,11 +117,9 @@ namespace Market_App_API.Migrations
 
             modelBuilder.Entity("MarkerAPI.Models.Product", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Barcode")
                         .IsRequired()
@@ -135,8 +128,8 @@ namespace Market_App_API.Migrations
                     b.Property<string>("Brand")
                         .HasColumnType("text");
 
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("integer");
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uuid");
 
                     b.Property<DateTime?>("ExpiryDate")
                         .HasColumnType("timestamp with time zone");
@@ -148,9 +141,6 @@ namespace Market_App_API.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
-
                     b.HasKey("Id");
 
                     b.HasIndex("Barcode")
@@ -161,13 +151,22 @@ namespace Market_App_API.Migrations
                     b.ToTable("Products");
                 });
 
+            modelBuilder.Entity("MarkerAPI.Models.TesteDatabase", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TesteDatabase");
+                });
+
             modelBuilder.Entity("MarkerAPI.Models.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                        .HasColumnType("uuid");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -203,9 +202,6 @@ namespace Market_App_API.Migrations
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("refreshToken")
                         .HasColumnType("text");
 
@@ -217,14 +213,14 @@ namespace Market_App_API.Migrations
                     b.HasIndex("Email")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("MarkerAPI.Models.Expense", b =>
                 {
                     b.HasOne("MarkerAPI.Models.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

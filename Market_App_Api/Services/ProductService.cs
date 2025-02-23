@@ -50,7 +50,7 @@ public class ProductService
 
     public async Task<bool> DeleteProductAsync(Guid productId)
     {
-        var product = await _context.Products.FirstOrDefaultAsync(p => p.ProductId == productId);
+        var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == productId);
 
         if (product == null)
         {
@@ -65,6 +65,6 @@ public class ProductService
 
     public async Task<Product> GetProductByIdAsync(Guid productId)
     {
-        return await _context.Products.Include(c => c.Category).FirstOrDefaultAsync(p => p.ProductId == productId);
+        return await _context.Products.Include(c => c.Category).FirstOrDefaultAsync(p => p.Id == productId);
     }
 }

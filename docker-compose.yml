@@ -6,7 +6,7 @@
     environment:
       POSTGRES_USER: myuser
       POSTGRES_PASSWORD: mypassword
-      POSTGRES_DB: mydatabase2
+      POSTGRES_DB: mydatabase3
     ports:
       - "5433:5432"
     volumes:

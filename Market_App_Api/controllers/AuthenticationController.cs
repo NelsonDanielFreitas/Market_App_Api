@@ -44,7 +44,7 @@ public class AuthenticationController : ControllerBase
                 new { message = "Email not verified. Please check your email for the verification code." });
         }
 
-        var accessToken = _jwtService.GenerateAccessToken(result.User.UserId.ToString(), result.User.Email, result.User.Role);
+        var accessToken = _jwtService.GenerateAccessToken(result.User.Id.ToString(), result.User.Email, result.User.Role);
 
         var UserSend = new User
         {

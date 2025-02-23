@@ -6,11 +6,11 @@ namespace MarkerAPI.Models;
 public class Expense
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
     
-    public int UserId { get; set; }
+    public Guid UserId { get; set; }
     
-    [ForeignKey("UserId")]
+    [ForeignKey("Id")]
     public User User { get; set; }
     
     public decimal Amount { get; set; }

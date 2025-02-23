@@ -15,7 +15,7 @@ public class AddProductDTO
     public decimal Price { get; set; }
 
     [Required]
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
 
     public string? Brand { get; set; }
     public DateTime? ExpiryDate { get; set; }

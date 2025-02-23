@@ -3,6 +3,7 @@ using MarkerAPI.Data;
 using MarkerAPI.Services;
 using MarkerAPI.Services.Caching;
 using Market_App_Api.Mapper;
+using Market_App_Api.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -24,6 +25,9 @@ builder.Services.AddScoped<CategoryService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<IRedisCacheService, RedisCacheService>();
 builder.Services.AddAutoMapper(typeof(ProductMappingProfile));
+builder.Services.AddScoped<IGroceryListRepository, GroceryListRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IGroceryListService, GroceryListService>();
 // Configure JWT
 var key = Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!);
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

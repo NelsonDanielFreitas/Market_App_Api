@@ -5,11 +5,12 @@ namespace MarkerAPI.Models;
 
 public class User
 {
-    [Key]
-    //[DatabaseGenerated(DatabaseGeneratedOption.None)] 
-    public int Id { get; set; }
     
-    public Guid UserId { get; set; }
+    //[DatabaseGenerated(DatabaseGeneratedOption.None)] 
+    [Key]
+    public Guid Id { get; set; }
+    
+    //public Guid UserId { get; set; }
     
     [Required]
     [MaxLength(100), EmailAddress]

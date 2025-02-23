@@ -6,9 +6,9 @@ namespace MarkerAPI.Models;
 public class Product
 {
     [Key]
-    public int Id { get; set; }
+    public Guid Id { get; set; }
 
-    public Guid ProductId { get; set; } = Guid.NewGuid();
+    //public Guid ProductId { get; set; } = Guid.NewGuid();
     
     [Required]
     public string Name { get; set; }
@@ -19,7 +19,7 @@ public class Product
     [Required]
     public decimal Price { get; set; }
     
-    public int CategoryId { get; set; }
+    public Guid CategoryId { get; set; }
     
     [ForeignKey("CategoryId")]
     public Category Category { get; set; }

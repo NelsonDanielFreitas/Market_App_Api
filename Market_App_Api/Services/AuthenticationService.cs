@@ -24,7 +24,7 @@ public class AuthenticationService
     public async Task<bool> RegisterUserAsync(RegisterDTO registerDto)
     {
         //Validação se já existe um Utilizador com o email criado
-        if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
+        if (await _context.User.AnyAsync(u => u.Email == registerDto.Email))
         {
             return false;
         }
@@ -33,7 +33,7 @@ public class AuthenticationService
         var verificationCode = new Random().Next(100000, 999999).ToString();
         var user = new User
         {
-            UserId = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             Name = registerDto.Name,
             Email = registerDto.Email,
             Password = passwordHash,
@@ -42,7 +42,7 @@ public class AuthenticationService
             EmailVerified = false
         };
 
-        _context.Users.Add(user);
+        _context.User.Add(user);
         await _context.SaveChangesAsync();
         //var testEnv = _config["Email:Username"];
         SendVerificationEmail(user.Email, verificationCode);
@@ -77,7 +77,7 @@ public class AuthenticationService
     //Função para validar o email
     public async Task<bool> VerifyEmailAsync(VerifyEmailDTO verifyEmail)
     {
-        var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == verifyEmail.Email);
+        var user = await _context.User.SingleOrDefaultAsync(u => u.Email == verifyEmail.Email);
         if (user == null || user.EmailVerificationCode != verifyEmail.Code)
         {
             return false;
@@ -92,7 +92,7 @@ public class AuthenticationService
 
     public async Task<AuthenticationResult> ValidateUserAsync(UserLoginDTO login)
     {
-        var user = await _context.Users.SingleOrDefaultAsync(u => u.Email == login.Email);
+        var user = await _context.User.SingleOrDefaultAsync(u => u.Email == login.Email);
 
         if (user == null)
         {
