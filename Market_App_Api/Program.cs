@@ -50,6 +50,7 @@ builder.Services.AddScoped<JwtService>();
 
 
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

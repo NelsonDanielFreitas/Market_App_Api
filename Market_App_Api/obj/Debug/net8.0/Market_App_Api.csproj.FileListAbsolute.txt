@@ -149,3 +149,4 @@ C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\bin\D
 C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\bin\Debug\net8.0\StackExchange.Redis.dll
 C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\bin\Debug\net8.0\AutoMapper.dll
 C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\Nelson Freitas\Documents\Market_API\Market_App_Api\Market_App_Api\bin\Debug\net8.0\Newtonsoft.Json.dll

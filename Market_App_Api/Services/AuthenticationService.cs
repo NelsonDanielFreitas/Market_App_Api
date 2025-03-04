@@ -167,9 +167,9 @@ public class AuthenticationService
             
         string encryptionKeyString = _config["Encryption:RefreshTokenKey"];
         byte[] encryptionKey = Encoding.UTF8.GetBytes(encryptionKeyString);
-        /*var newEncryptedRefreshToken = AesEncryption.Encrypt(newPlainRefreshToken, encryptionKey);
+        var newEncryptedRefreshToken = AesEncryption.Encrypt(newPlainRefreshToken, encryptionKey);
             
-        user.refreshToken = newEncryptedRefreshToken;*/
+        user.refreshToken = newEncryptedRefreshToken;
         user.refreshTokenExpiryTime = _jwtTokenService.GetRefreshTokenExpiry();
         await _context.SaveChangesAsync();
             

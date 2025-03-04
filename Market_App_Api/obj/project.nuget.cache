@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "wefBgaBjngl75SDClPHTweXcD38BtrbtggbjvIKuusrFrJ1z58VCI/1rcs/tpHbPsBWR4w1Tth8o/rG16+FSTw==",
+  "dgSpecHash": "S5LCK/setOM8H2BXacgDCYT7vqY+WZjhrVY5r8Psc+wF7HSyB+2YMgXyTBDiO03FY+PGXs222VnvGIlIti4Jlw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Nelson Freitas\\Documents\\Market_API\\Market_App_Api\\Market_App_Api\\Market_App_Api.csproj",
   "expectedPackageFiles": [
@@ -46,6 +46,7 @@
     "C:\\Users\\Nelson Freitas\\.nuget\\packages\\microsoft.identitymodel.tokens\\8.5.0\\microsoft.identitymodel.tokens.8.5.0.nupkg.sha512",
     "C:\\Users\\Nelson Freitas\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
     "C:\\Users\\Nelson Freitas\\.nuget\\packages\\mono.texttemplating\\3.0.0\\mono.texttemplating.3.0.0.nupkg.sha512",
+    "C:\\Users\\Nelson Freitas\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
     "C:\\Users\\Nelson Freitas\\.nuget\\packages\\npgsql\\9.0.2\\npgsql.9.0.2.nupkg.sha512",
     "C:\\Users\\Nelson Freitas\\.nuget\\packages\\npgsql.entityframeworkcore.postgresql\\9.0.3\\npgsql.entityframeworkcore.postgresql.9.0.3.nupkg.sha512",
     "C:\\Users\\Nelson Freitas\\.nuget\\packages\\pipelines.sockets.unofficial\\2.2.8\\pipelines.sockets.unofficial.2.2.8.nupkg.sha512",
