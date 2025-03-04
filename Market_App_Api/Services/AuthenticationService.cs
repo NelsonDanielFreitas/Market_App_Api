@@ -146,4 +146,38 @@ public class AuthenticationService
 
         return new AuthenticationResult { User = user };
     }
+    
+    
+    public async Task<RefreshTokenDTO?> RefreshTokenAsync(string providedEncryptedRefreshToken)
+    {
+        var user = await _context.User.FirstOrDefaultAsync(u => u.refreshToken == providedEncryptedRefreshToken);
+        if (user == null)
+        {
+            return null; 
+        }
+            
+        if (user.refreshTokenExpiryTime < DateTime.UtcNow)
+        {
+            return null; 
+        }
+            
+        var newAccessToken = _jwtTokenService.GenerateAccessToken(user.Id.ToString(), user.Email, user.Role);
+            
+        var newPlainRefreshToken = _jwtTokenService.GenerateRefreshToken();
+            
+        string encryptionKeyString = _config["Encryption:RefreshTokenKey"];
+        byte[] encryptionKey = Encoding.UTF8.GetBytes(encryptionKeyString);
+        /*var newEncryptedRefreshToken = AesEncryption.Encrypt(newPlainRefreshToken, encryptionKey);
+            
+        user.refreshToken = newEncryptedRefreshToken;*/
+        user.refreshTokenExpiryTime = _jwtTokenService.GetRefreshTokenExpiry();
+        await _context.SaveChangesAsync();
+            
+        return new RefreshTokenDTO
+        {
+            AccessToken = newAccessToken,
+            //EncryptedRefreshToken = newEncryptedRefreshToken
+            EncryptedRefreshToken = user.refreshToken
+        };
+    }
 }

@@ -92,4 +92,34 @@ public class AuthenticationController : ControllerBase
 
         return Ok(new { message = "Email verified successfully" });
     }
+    
+    
+    [HttpPost("refresh-token")]
+    public async Task<IActionResult> RefreshToken()
+    {
+        if (!Request.Cookies.TryGetValue("refreshToken", out string providedRefreshToken))
+        {
+            return Unauthorized(new { message = "Refresh token missing. Please login again." });
+        }
+            
+        var refreshResult = await _authenticationService.RefreshTokenAsync(providedRefreshToken);
+        if (refreshResult == null)
+        {
+            return Unauthorized(new { message = "Invalid or expired refresh token. Please login again." });
+        }
+            
+        Response.Cookies.Append("refreshToken", refreshResult.EncryptedRefreshToken, new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddDays(7)
+        });
+            
+        return Ok(new 
+        { 
+            AccessToken = refreshResult.AccessToken, 
+            RefreshToken = refreshResult.EncryptedRefreshToken 
+        });
+    }
 }
