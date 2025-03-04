@@ -1,8 +1,10 @@
 using System.Net;
 using System.Net.Mail;
+using System.Text;
 using MarkerAPI.Data;
 using MarkerAPI.DTO;
 using MarkerAPI.Models;
+using Market_App_Api.Helper;
 //using Market_App_API.Helper;
 using Microsoft.EntityFrameworkCore;
 
@@ -129,9 +131,17 @@ public class AuthenticationService
 
         user.FailedLoginAttempts = 0;
         user.LockoutEndTime = null;
-
-        user.refreshToken = _jwtTokenService.GenerateRefreshToken();
+        
+        var plainRefreshToken = _jwtTokenService.GenerateRefreshToken();
+        
+        string encryptionKeyString = _config["Encryption:RefreshTokenKey"];
+        byte[] encryptionKey = Encoding.UTF8.GetBytes(encryptionKeyString);
+            
+        // Encrypt the refresh token using AES-256
+        user.refreshToken = AesEncryption.Encrypt(plainRefreshToken, encryptionKey);
         user.refreshTokenExpiryTime = _jwtTokenService.GetRefreshTokenExpiry();
+        /*user.refreshToken = _jwtTokenService.GenerateRefreshToken();
+        user.refreshTokenExpiryTime = _jwtTokenService.GetRefreshTokenExpiry();*/
         await _context.SaveChangesAsync();
 
         return new AuthenticationResult { User = user };
